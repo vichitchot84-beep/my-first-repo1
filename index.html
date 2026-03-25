@@ -1,1 +1,677 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ជំនាញកុំព្យូទ័រ - រៀនជំនាញទំនើប ទទួលបានអាជីពអនាគត">
+    <title>ជំនាញកុំព្យូទ័រ | រៀនឥឡូវនេះ ជោគជ័យភ្លាមៗ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;500;700&amp;display=swap');
 
+        :root {
+            --primary: #00d4ff;
+        }
+
+        * {
+            font-family: 'Noto Sans Khmer', system-ui, sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #00d4ff 0%, #0077cc 100%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -2px;
+            left: 0;
+            background-color: #00d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 50px -12px rgb(0 212 255 / 0.3);
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid #fff;
+            animation: typing 3.5s steps(30, end) forwards,
+                blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #fff
+            }
+        }
+
+        .section-title {
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #00d4ff, #0077cc);
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-inner floating">
+                    💻
+                </div>
+                <div>
+                    <h1
+                        class="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">
+                        ជំនាញកុំព្យូទ័រ</h1>
+                    <p class="text-xs text-gray-500 -mt-1 font-medium">SkillHub Cambodia</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+                <a href="#home" onclick="smoothScrollTo('home')"
+                    class="nav-link text-gray-700 hover:text-cyan-500">ទំព័រដើម</a>
+                <a href="#courses" onclick="smoothScrollTo('courses')"
+                    class="nav-link text-gray-700 hover:text-cyan-500">វគ្គសិក្សា</a>
+                <a href="#benefits" onclick="smoothScrollTo('benefits')"
+                    class="nav-link text-gray-700 hover:text-cyan-500">អត្ថប្រយោជន៍</a>
+                <a href="#testimonials" onclick="smoothScrollTo('testimonials')"
+                    class="nav-link text-gray-700 hover:text-cyan-500">សក្ខីកម្ម</a>
+                <a href="#contact" onclick="smoothScrollTo('contact')"
+                    class="nav-link text-gray-700 hover:text-cyan-500">ទំនាក់ទំនង</a>
+            </div>
+
+            <!-- CTA Button -->
+            <div class="flex items-center gap-4">
+                <button onclick="showEnrollModal()"
+                    class="px-8 py-3 bg-white border-2 border-cyan-500 text-cyan-600 font-semibold rounded-3xl hover:bg-cyan-50 transition-all flex items-center gap-2 shadow-md">
+                    <i class="fas fa-rocket"></i>
+                    ចុះឈ្មោះឥឡូវ
+                </button>
+
+                <!-- Mobile Hamburger -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-3xl text-cyan-600">
+                    <i class="fas fa-bars" id="hamburger-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t shadow-lg px-6 py-6">
+            <div class="flex flex-col gap-6 text-xl">
+                <a href="#home" onclick="toggleMobileMenu();smoothScrollTo('home')"
+                    class="py-2 hover:text-cyan-500">ទំព័រដើម</a>
+                <a href="#courses" onclick="toggleMobileMenu();smoothScrollTo('courses')"
+                    class="py-2 hover:text-cyan-500">វគ្គសិក្សា</a>
+                <a href="#benefits" onclick="toggleMobileMenu();smoothScrollTo('benefits')"
+                    class="py-2 hover:text-cyan-500">អត្ថប្រយោជន៍</a>
+                <a href="#testimonials" onclick="toggleMobileMenu();smoothScrollTo('testimonials')"
+                    class="py-2 hover:text-cyan-500">សក្ខីកម្ម</a>
+                <a href="#contact" onclick="toggleMobileMenu();smoothScrollTo('contact')"
+                    class="py-2 hover:text-cyan-500">ទំនាក់ទំនង</a>
+                <button onclick="toggleMobileMenu();showEnrollModal()"
+                    class="mt-4 w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-bold rounded-3xl text-xl shadow-xl">
+                    ចុះឈ្មោះឥឡូវនេះ!
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white min-h-screen flex items-center relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <!-- Left Content -->
+            <div class="space-y-8 pt-12 md:pt-0">
+                <div
+                    class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-6 py-3 rounded-3xl text-sm font-medium">
+                    <span class="relative flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                    </span>
+                    បើកបង្ហាញថ្មីឆ្នាំ ២០២៦
+                </div>
+
+                <h1 class="text-6xl md:text-7xl font-bold leading-none">
+                    បង្កើនជំនាញកុំព្យូទ័រ<br>របស់អ្នកឥឡូវនេះ!
+                </h1>
+
+                <p id="typing-text" class="text-2xl md:text-3xl font-medium text-white/90 typing max-w-lg">
+                    ពីមូលដ្ឋាន រហូតដល់អាជីពឌីជីថល
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="showEnrollModal()"
+                        class="px-10 py-5 bg-white text-cyan-700 font-bold text-xl rounded-3xl flex items-center gap-3 hover:scale-110 transition-all shadow-2xl">
+                        <i class="fas fa-graduation-cap"></i>
+                        ចាប់ផ្តើមរៀនឥតគិតថ្លៃ
+                    </button>
+                    <button onclick="smoothScrollTo('courses')"
+                        class="px-10 py-5 border-2 border-white font-bold text-xl rounded-3xl flex items-center gap-3 hover:bg-white/10 transition-all">
+                        មើលវគ្គសិក្សា <i class="fas fa-arrow-down"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-8">
+                    <div class="flex -space-x-6">
+                        <div class="w-9 h-9 bg-white rounded-2xl flex items-center justify-center text-xl shadow">👨‍💻
+                        </div>
+                        <div class="w-9 h-9 bg-white rounded-2xl flex items-center justify-center text-xl shadow">👩‍💼
+                        </div>
+                        <div class="w-9 h-9 bg-white rounded-2xl flex items-center justify-center text-xl shadow">🧑‍🎓
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-xl">១២,៤៨៥ នាក់ បានចុះឈ្មោះ</p>
+                        <p class="text-sm opacity-75">ក្នុងខែមីនា ២០២៦</p>
+                    </div>
+                    <div class="h-12 w-px bg-white/30"></div>
+                    <div class="text-5xl font-bold">98%</div>
+                    <div class="text-sm leading-tight">និស្សិតបានទទួលការងារ<br>ក្នុងរយៈពេល ៣ ខែ</div>
+                </div>
+            </div>
+
+            <!-- Right Visual -->
+            <div class="relative hidden md:flex justify-center">
+                <div
+                    class="absolute -top-12 -right-12 w-80 h-80 bg-white/10 backdrop-blur-3xl rounded-[4rem] rotate-12 flex items-center justify-center text-[180px] shadow-2xl">
+                    💻
+                </div>
+                <div class="relative bg-white rounded-3xl shadow-2xl p-6 max-w-[420px] text-cyan-900">
+                    <div class="bg-gray-900 text-white rounded-2xl p-6 font-mono text-sm mb-6">
+                        <div class="flex justify-between mb-4">
+                            <span class="text-cyan-400">console.log("សួស្តី ពិភពលោក!")</span>
+                        </div>
+                        <div class="text-emerald-400">ជំនាញកុំព្យូទ័រ → អាជីពថ្មី</div>
+                    </div>
+                    <div class="flex items-center justify-between text-center">
+                        <div>
+                            <div class="text-4xl font-bold text-cyan-500">HTML</div>
+                            <div class="text-xs">CSS</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-cyan-500">JS</div>
+                            <div class="text-xs">React</div>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold text-cyan-500">Python</div>
+                            <div class="text-xs">AI</div>
+                        </div>
+                    </div>
+                    <div class="mt-8 text-center text-sm font-medium flex items-center justify-center gap-2">
+                        <div class="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+                        កំពុងរៀនជាមួយអ្នកជំនាញពិត
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div onclick="smoothScrollTo('courses')"
+            class="absolute bottom-10 left-1/2 hidden md:flex flex-col items-center cursor-pointer">
+            <div class="text-white/70 text-sm tracking-widest mb-2">រមូលចុះក្រោម</div>
+            <i class="fas fa-chevron-down text-4xl animate-bounce"></i>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="px-6 py-2 bg-cyan-100 text-cyan-700 rounded-3xl text-sm font-bold">វគ្គសិក្សាថ្មីៗ</span>
+                <h2 class="section-title text-5xl font-bold mt-4 text-gray-800">ជ្រើសរើសជំនាញកុំព្យូទ័ររបស់អ្នក</h2>
+                <p class="mt-4 text-xl text-gray-500 max-w-md mx-auto">វគ្គទាំងអស់ត្រូវបានបង្រៀនដោយអ្នកជំនាញ
+                    និងមានវិញ្ញាបនបត្រ</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="card-hover bg-white border border-gray-100 rounded-3xl p-8 shadow-xl">
+                    <div class="text-6xl mb-6">🌐</div>
+                    <h3 class="text-3xl font-bold mb-2">ការរចនាវេបសាយ</h3>
+                    <p class="text-gray-500 mb-6">HTML • CSS • JavaScript • Tailwind • Responsive Design</p>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <span class="text-5xl font-bold text-cyan-500">៨ សប្តាហ៍</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="line-through text-gray-400">៥០០,០០០៛</span><br>
+                            <span class="text-emerald-500 font-bold text-2xl">ឥតគិតថ្លៃសាកល្បង</span>
+                        </div>
+                    </div>
+                    <button onclick="enrollCourse(1)"
+                        class="mt-8 w-full py-4 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-2xl">ចាប់ផ្តើមរៀនឥឡូវ</button>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-hover bg-white border border-gray-100 rounded-3xl p-8 shadow-xl relative">
+                    <div
+                        class="absolute -top-3 -right-3 bg-orange-500 text-white text-xs px-6 py-1 rounded-3xl rotate-12 font-bold shadow">
+                        ពេញនិយមបំផុត</div>
+                    <div class="text-6xl mb-6">📊</div>
+                    <h3 class="text-3xl font-bold mb-2">Microsoft Office Pro</h3>
+                    <p class="text-gray-500 mb-6">Word • Excel • PowerPoint • Data Analysis • Automation</p>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <span class="text-5xl font-bold text-cyan-500">១២ សប្តាហ៍</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-emerald-500 font-bold text-2xl">៣០០,០០០៛/ខែ</span>
+                        </div>
+                    </div>
+                    <button onclick="enrollCourse(2)"
+                        class="mt-8 w-full py-4 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-2xl">ចាប់ផ្តើមរៀនឥឡូវ</button>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-hover bg-white border border-gray-100 rounded-3xl p-8 shadow-xl">
+                    <div class="text-6xl mb-6">🐍</div>
+                    <h3 class="text-3xl font-bold mb-2">កម្មវិធីវិស្វកម្ម</h3>
+                    <p class="text-gray-500 mb-6">Python • AI • Data Science • Web Development</p>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <span class="text-5xl font-bold text-cyan-500">១០ សប្តាហ៍</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="line-through text-gray-400">៨០០,០០០៛</span><br>
+                            <span class="text-emerald-500 font-bold text-2xl">៤៩៩,០០០៛</span>
+                        </div>
+                    </div>
+                    <button onclick="enrollCourse(3)"
+                        class="mt-8 w-full py-4 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-2xl">ចាប់ផ្តើមរៀនឥឡូវ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section id="benefits" class="py-24 bg-gradient-to-b from-cyan-50 to-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-5">
+                    <h2 class="text-5xl font-bold text-gray-800">ហេតុអ្វីជ្រើសយកជំនាញកុំព្យូទ័រនៅទីនេះ?</h2>
+                    <div class="mt-8 space-y-8">
+                        <div class="flex gap-6">
+                            <div class="text-6xl">🚀</div>
+                            <div>
+                                <h4 class="text-2xl font-semibold">រៀនពីអ្នកជំនាញពិត</h4>
+                                <p class="text-gray-600">គ្រូទាំងអស់មកពីក្រុមហ៊ុនធំៗក្នុងប្រទេសកម្ពុជា និងអន្តរជាតិ</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="text-6xl">📍</div>
+                            <div>
+                                <h4 class="text-2xl font-semibold">ថ្នាក់រៀននៅភ្នំពេញ + អនឡាញ</h4>
+                                <p class="text-gray-600">អ្នកអាចរៀននៅកន្លែងណាក៏បាន មានការគាំទ្រ ២៤/៧</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="text-6xl">🏆</div>
+                            <div>
+                                <h4 class="text-2xl font-semibold">វិញ្ញាបនបត្រអន្តរជាតិ</h4>
+                                <p class="text-gray-600">ទទួលបានវិញ្ញាបនបត្រដែលទទួលស្គាល់នៅទូទាំងពិភពលោក</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-7 bg-white rounded-3xl p-10 shadow-2xl grid grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="text-[120px] leading-none text-cyan-400">២៥០+</div>
+                        <p class="font-bold text-2xl">វគ្គសិក្សា</p>
+                        <p class="text-gray-500">ជាមួយការអភិវឌ្ឍថ្មីៗ</p>
+                    </div>
+                    <div class="text-center border-l">
+                        <div class="text-[120px] leading-none text-cyan-400">៩៩%</div>
+                        <p class="font-bold text-2xl">អត្រាបញ្ចប់ការសិក្សា</p>
+                        <p class="text-gray-500">ខ្ពស់បំផុតក្នុងប្រទេស</p>
+                    </div>
+                    <div class="text-center border-t pt-8">
+                        <div class="text-[120px] leading-none text-cyan-400">៥០០+</div>
+                        <p class="font-bold text-2xl">ក្រុមហ៊ុនផ្តល់ការងារ</p>
+                        <p class="text-gray-500">ដៃគូរបស់យើង</p>
+                    </div>
+                    <div class="text-center border-l border-t pt-8">
+                        <div class="text-[120px] leading-none text-cyan-400">២៤</div>
+                        <p class="font-bold text-2xl">ម៉ោងការគាំទ្រ</p>
+                        <p class="text-gray-500">រាល់ថ្ងៃ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section - កែផ្កាយថ្មី -->
+    <section id="testimonials" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-bold text-gray-800">និស្សិតរបស់យើងនិយាយថា</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div
+                    class="testimonial-card bg-gradient-to-br from-cyan-50 to-white p-8 rounded-3xl border border-cyan-100 hover:shadow-xl transition-all">
+                    <div class="flex gap-1 mb-6">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="italic text-lg leading-relaxed">"ខ្ញុំរៀន HTML CSS JS ក្នុងរយៈពេលតែ ២ ខែ
+                        ឥឡូវខ្ញុំមានការងារជា Web Developer នៅក្រុមហ៊ុនធំមួយ!"</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-pink-200 rounded-2xl flex items-center justify-center text-2xl">👩‍💻
+                        </div>
+                        <div>
+                            <div class="font-bold">សុខា សុភា</div>
+                            <div class="text-cyan-600 text-sm">Web Developer @ Wing Bank</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div
+                    class="testimonial-card bg-gradient-to-br from-cyan-50 to-white p-8 rounded-3xl border border-cyan-100 hover:shadow-xl transition-all">
+                    <div class="flex gap-1 mb-6">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="italic text-lg leading-relaxed">"វគ្គ Office Pro បានជួយខ្ញុំធ្វើការងារលឿនជាងមុន ៣ ដង។
+                        ខ្ញុំទទួលបានការងារថ្មីក្នុងរយៈពេលតែ ១ ខែ!"</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-200 rounded-2xl flex items-center justify-center text-2xl">👨‍💼
+                        </div>
+                        <div>
+                            <div class="font-bold">ណារិន រតនា</div>
+                            <div class="text-cyan-600 text-sm">Office Manager @ Cellcard</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div
+                    class="testimonial-card bg-gradient-to-br from-cyan-50 to-white p-8 rounded-3xl border border-cyan-100 hover:shadow-xl transition-all">
+                    <div class="flex gap-1 mb-6">
+                        ★ ★ ★ ★ ★
+                    </div>
+                    <p class="italic text-lg leading-relaxed">"Python និង AI
+                        ធ្វើឱ្យខ្ញុំអាចបង្កើតប្រព័ន្ធស្វ័យប្រវត្តិសម្រាប់ហាងរបស់ខ្ញុំ។ អរគុណ SkillHub!"</p>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-emerald-200 rounded-2xl flex items-center justify-center text-2xl">
+                            🧑‍💼</div>
+                        <div>
+                            <div class="font-bold">វិរៈ សុខា</div>
+                            <div class="text-cyan-600 text-sm">Business Owner</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Final CTA -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-cyan-600 to-blue-700 text-white">
+        <div class="max-w-4xl mx-auto text-center px-6">
+            <h2 class="text-6xl font-bold mb-6">ត្រៀមខ្លួនជាស្រេចដើម្បីផ្លាស់ប្តូរអាជីពរបស់អ្នកហើយឬនៅ?</h2>
+            <p class="text-3xl mb-10">ចុះឈ្មោះឥឡូវនេះ ទទួលបានការសាកល្បងឥតគិតថ្លៃ ១៤ ថ្ងៃ!</p>
+
+            <button onclick="showEnrollModal()"
+                class="text-3xl px-16 py-8 bg-white text-cyan-700 font-bold rounded-3xl inline-flex items-center gap-4 hover:scale-110 transition-transform shadow-2xl">
+                ចុះឈ្មោះភ្លាមៗ
+                <span class="text-5xl">→</span>
+            </button>
+
+            <p class="mt-8 text-sm opacity-75">មានការគាំទ្រជាភាសាខ្មែរ និងអង់គ្លេស • ធានាសងប្រាក់វិញ ១០០%</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8 text-sm">
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-9 h-9 bg-cyan-400 rounded-2xl flex items-center justify-center text-3xl">💻</div>
+                    <span class="text-3xl font-bold">ជំនាញកុំព្យូទ័រ</span>
+                </div>
+                <p class="opacity-70">មជ្ឈមណ្ឌលបណ្តុះបណ្តាលជំនាញឌីជីថលនៅភ្នំពេញ</p>
+                <p class="mt-6 opacity-50">© ២០២៦ SkillHub Cambodia</p>
+            </div>
+            <div>
+                <div class="font-bold mb-4 text-cyan-400">វគ្គសិក្សា</div>
+                <ul class="space-y-2 opacity-70">
+                    <li>ការរចនាវេបសាយ</li>
+                    <li>Microsoft Office</li>
+                    <li>កម្មវិធី Python &amp; AI</li>
+                    <li>ទិន្នន័យនិង Network</li>
+                </ul>
+            </div>
+            <div>
+                <div class="font-bold mb-4 text-cyan-400">ទំនាក់ទំនង</div>
+                <p class="opacity-70">📍 ផ្លូវ ២៧១ ភ្នំពេញ</p>
+                <p class="opacity-70">📞 ០១២ ៣៤៥ ៦៧៨</p>
+                <p class="opacity-70">📧 info@skillhub.kh</p>
+            </div>
+            <div>
+                <div class="font-bold mb-4 text-cyan-400">តាមដានយើង</div>
+                <div class="flex gap-6 text-3xl">
+                    <i class="fab fa-facebook hover:text-cyan-400 cursor-pointer"></i>
+                    <i class="fab fa-telegram hover:text-cyan-400 cursor-pointer"></i>
+                    <i class="fab fa-youtube hover:text-cyan-400 cursor-pointer"></i>
+                    <i class="fab fa-linkedin hover:text-cyan-400 cursor-pointer"></i>
+                </div>
+                <p class="mt-8 text-xs opacity-60">បង្កើតដោយ Grok ដោយប្រើ HTML • CSS • JS ពិតៗ</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Enroll Modal -->
+    <div id="enroll-modal" onclick="if(event.target.id === 'enroll-modal')hideEnrollModal()"
+        class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[9999]">
+        <div onclick="event.stopImmediatePropagation()"
+            class="bg-white rounded-3xl max-w-lg w-full mx-4 overflow-hidden">
+            <div class="p-8">
+                <h3 class="text-3xl font-bold text-center mb-6">ចុះឈ្មោះរៀនជំនាញកុំព្យូទ័រ</h3>
+
+                <form onsubmit="handleSubmit(event)" class="space-y-6">
+                    <input type="text" id="name" placeholder="ឈ្មោះពេញ"
+                        class="w-full px-6 py-5 border rounded-3xl focus:outline-none focus:border-cyan-400 text-lg">
+                    <input type="tel" id="phone" placeholder="លេខទូរស័ព្ទ"
+                        class="w-full px-6 py-5 border rounded-3xl focus:outline-none focus:border-cyan-400 text-lg">
+                    <select id="course"
+                        class="w-full px-6 py-5 border rounded-3xl focus:outline-none focus:border-cyan-400 text-lg">
+                        <option value="">ជ្រើសរើសវគ្គសិក្សា</option>
+                        <option value="web">ការរចនាវេបសាយ (HTML CSS JS)</option>
+                        <option value="office">Microsoft Office Pro</option>
+                        <option value="python">កម្មវិធី Python &amp; AI</option>
+                    </select>
+
+                    <button type="submit"
+                        class="w-full py-6 bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-bold text-2xl rounded-3xl hover:brightness-110 transition-all">
+                        បញ្ជូនពាក្យសុំរៀន
+                    </button>
+                </form>
+            </div>
+            <div class="bg-gray-50 px-8 py-6 text-center text-sm text-gray-500 flex justify-between">
+                <span>ធានាសងប្រាក់វិញ ១០០%</span>
+                <span onclick="hideEnrollModal()" class="cursor-pointer hover:text-red-500">បិទ</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind initialization
+        function initTailwind() {
+            return {
+                config(userConfig = {}) {
+                    return {
+                        configUser: userConfig,
+                        theme: {
+                            extend: {
+                                colors: {
+                                    primary: '#00d4ff'
+                                }
+                            }
+                        }
+                    }
+                },
+                theme: {
+                    extend: {}
+                }
+            }
+        }
+
+        // Run Tailwind
+        document.addEventListener('DOMContentLoaded', () => {
+            return initTailwind()
+        })
+
+        // Smooth scroll
+        function smoothScrollTo(section) {
+            const element = document.getElementById(section)
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' })
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu')
+            const icon = document.getElementById('hamburger-icon')
+
+            menu.classList.toggle('hidden')
+
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars')
+                icon.classList.add('fa-xmark')
+            } else {
+                icon.classList.remove('fa-xmark')
+                icon.classList.add('fa-bars')
+            }
+        }
+
+        // Show enroll modal
+        function showEnrollModal() {
+            document.getElementById('enroll-modal').classList.remove('hidden')
+            document.getElementById('enroll-modal').classList.add('flex')
+        }
+
+        function hideEnrollModal() {
+            const modal = document.getElementById('enroll-modal')
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+        }
+
+        // Fake course enrollment
+        function enrollCourse(id) {
+            const messages = [
+                "🎉 អបអរសាទរ! អ្នកបានចុះឈ្មោះវគ្គរចនាវេបសាយហើយ!",
+                "🚀 អ្នកនឹងទទួលបានសំបុត្រវគ្គ Office Pro តាម Email ភ្លាមៗ!",
+                "🐍 សូមស្វាគមន៍មកកាន់ Python Mastery Course!"
+            ]
+            alert(messages[id - 1] + "\n\n(នេះជាការសាកល្បង JS ពិតៗ)")
+            smoothScrollTo('contact')
+        }
+
+        // Form submission handler with beautiful animation
+        function handleSubmit(e) {
+            e.preventDefault()
+
+            const name = document.getElementById('name').value || 'សិស្ស'
+
+            // Simulate loading
+            const btn = e.target.querySelector('button')
+            const originalText = btn.innerHTML
+            btn.innerHTML = `
+                <svg class="animate-spin h-8 w-8 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                </svg>
+            `
+            setTimeout(() => {
+                hideEnrollModal()
+                alert(`🎉 សូមអរគុណ ${name}!\n\nអ្នកបានចុះឈ្មោះដោយជោគជ័យ។ យើងនឹងទាក់ទងអ្នកក្នុងពេលឆាប់ៗនេះ!`)
+
+                // Reset form
+                e.target.reset()
+                btn.innerHTML = originalText
+            }, 1800)
+        }
+
+        // Keyboard shortcut (press "/" to open modal)
+        document.addEventListener('keydown', function (e) {
+            if (e.key === '/' && document.activeElement.tagName === "BODY") {
+                e.preventDefault()
+                showEnrollModal()
+            }
+        })
+
+        console.log('%c✅ ការផ្សព្វផ្សាយជំនាញកុំព្យូទ័រត្រូវបានបង្កើតដោយ HTML + CSS + JS ពេញលេញ ស្រស់ស្អាត និងតាក់ទាញខ្លាំង!', 'background:#00d4ff;color:#000;font-size:14px;padding:2px 6px;border-radius:4px')
+    </script>
+</body>
+
+</html>
